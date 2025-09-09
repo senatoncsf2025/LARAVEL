@@ -1,6 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- Hero Section -->
+<section id="inicio" class="hero-section text-center py-5 mt-5 bg-dark text-white rounded">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-4">BIENVENIDOS A SIORTISOFT</h1>
+        <p class="lead mb-5">
+            Soluciones innovadoras y seguras para colegios, universidades y entidades gubernamentales.
+        </p>
+        <a href="{{ route('soluciones') }}" class="btn btn-outline-light btn-lg me-2">
+            Descubre Nuestras Soluciones
+        </a>
+        <a href="https://web.whatsapp.com/" target="_blank" class="btn btn-outline-light btn-lg">
+            Contáctanos
+        </a>
+    </div>
+</section>
+
+<!-- Formulario de Contacto -->
 <div class="container py-5">
     <h2 class="text-center mb-5 display-4 fw-bold text-dark">Hablemos de tu Institución</h2>
     
@@ -23,24 +40,28 @@
         <div class="row mb-3">
             <div class="col-md-6">
                 <label for="nombre" class="form-label">Nombre del Contacto</label>
-                <input type="text" name="nombre" class="form-control" value="{{ old('nombre') }}" required>
+                <input type="text" id="nombre" name="nombre" class="form-control" 
+                       value="{{ old('nombre') }}" required>
             </div>
             <div class="col-md-6">
                 <label for="institucion" class="form-label">Institución / Entidad</label>
-                <input type="text" name="institucion" class="form-control" value="{{ old('institucion') }}" required>
+                <input type="text" id="institucion" name="institucion" class="form-control" 
+                       value="{{ old('institucion') }}" required>
             </div>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Correo Electrónico Oficial</label>
-            <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
+            <input type="email" id="email" name="email" class="form-control" 
+                   value="{{ old('email') }}" required>
         </div>
         <div class="mb-3">
             <label for="telefono" class="form-label">Número de Teléfono</label>
-            <input type="tel" name="telefono" class="form-control" value="{{ old('telefono') }}" required>
+            <input type="tel" id="telefono" name="telefono" class="form-control" 
+                   value="{{ old('telefono') }}" required>
         </div>
         <div class="mb-3">
             <label for="mensaje" class="form-label">¿Cómo podemos ayudarte?</label>
-            <textarea name="mensaje" class="form-control" rows="5" required>{{ old('mensaje') }}</textarea>
+            <textarea id="mensaje" name="mensaje" class="form-control" rows="5" required>{{ old('mensaje') }}</textarea>
         </div>
         <div class="d-grid gap-2">
             <button type="submit" class="btn btn-dark btn-lg">Enviar Solicitud</button>
