@@ -10,34 +10,43 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    // Nombre real de la tabla
-    protected $table = 'usuario';
+    // Nombre de la tabla
+    protected $table = 'users';
 
-    // Clave primaria real
-    protected $primaryKey = 'ID_USUARIO';
+    // Clave primaria
+    protected $primaryKey = 'id';
 
-    // Desactivar timestamps si la tabla no los tiene
-    public $timestamps = false;
+    // Laravel usa timestamps
+    public $timestamps = true;
 
     // Campos asignables en masa
     protected $fillable = [
-        'nombre_usuario',
-        'correo',
+        'name',
+        'email',
+        'password',
         'telefono',
         'cedula',
         'direccion',
         'codigo_vigilante',
-        'contrasena_hash',
-        'fk_id_rol',
+        'rol',
     ];
 
     // Campos ocultos al serializar
     protected $hidden = [
-        'contrasena_hash',
+        'password',
+        'remember_token',
     ];
 
-    // Casting de atributos si lo necesitas
+    // Casting de atributos
     protected $casts = [
-        // 'created_at' => 'datetime', // descomentar si existe
+        'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Método de contraseña que usa Laravel Auth
+     */
+    public function getAuthPassword()
+    {
+        return $this->password;
+    }
 }

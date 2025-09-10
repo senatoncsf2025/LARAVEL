@@ -22,55 +22,46 @@
             </div>
         @endif
 
-        <!-- Nombre -->
         <div class="mb-3 text-start">
-            <label for="nombre" class="form-label">Nombre Completo</label>
-            <input type="text" name="nombre" id="nombre" class="form-control" value="{{ old('nombre') }}" required>
+            <label for="name" class="form-label">Nombre Completo</label>
+            <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
         </div>
 
-        <!-- Correo -->
         <div class="mb-3 text-start">
-            <label for="correo" class="form-label">Correo Electrónico</label>
-            <input type="email" name="correo" id="correo" class="form-control" value="{{ old('correo') }}" required>
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required>
         </div>
 
-        <!-- Teléfono -->
         <div class="mb-3 text-start">
             <label for="telefono" class="form-label">Teléfono</label>
             <input type="text" name="telefono" id="telefono" class="form-control" value="{{ old('telefono') }}">
         </div>
 
-        <!-- Cédula -->
         <div class="mb-3 text-start">
             <label for="cedula" class="form-label">Cédula</label>
-            <input type="text" name="cedula" id="cedula" class="form-control" value="{{ old('cedula') }}" required>
+            <input type="text" name="cedula" id="cedula" class="form-control" value="{{ old('cedula') }}">
         </div>
 
-        <!-- Dirección -->
         <div class="mb-3 text-start">
             <label for="direccion" class="form-label">Dirección</label>
             <input type="text" name="direccion" id="direccion" class="form-control" value="{{ old('direccion') }}">
         </div>
 
-        <!-- Código Vigilante -->
         <div class="mb-3 text-start">
             <label for="codigo_vigilante" class="form-label">Código Vigilante</label>
             <input type="text" name="codigo_vigilante" id="codigo_vigilante" class="form-control" value="{{ old('codigo_vigilante') }}">
         </div>
 
-        <!-- Contraseña -->
         <div class="mb-3 text-start">
-            <label for="contrasena" class="form-label">Contraseña</label>
-            <input type="password" name="contrasena" id="contrasena" class="form-control" required>
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" name="password" id="password" class="form-control" required>
         </div>
 
-        <!-- Confirmar Contraseña -->
         <div class="mb-3 text-start">
-            <label for="contrasena_confirmation" class="form-label">Confirmar Contraseña</label>
-            <input type="password" name="contrasena_confirmation" id="contrasena_confirmation" class="form-control" required>
+            <label for="password_confirmation" class="form-label">Confirmar Contraseña</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
         </div>
 
-        <!-- Rol -->
         <div class="mb-3 text-start">
             <label for="rol" class="form-label">Selecciona un Rol</label>
             <select name="rol" id="rol" class="form-control" required>

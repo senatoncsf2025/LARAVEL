@@ -9,78 +9,66 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    // -------------------------------
-    // LOGIN
-    // -------------------------------
+    // Mostrar formulario de login
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
+    // Login
     public function login(Request $request)
     {
-        // Validaciones
         $request->validate([
-            'correo' => 'required|email',
-            'contrasena' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
 
-        // Buscar usuario por correo
-        $user = User::where('correo', $request->correo)->first();
+        $user = User::where('email', $request->email)->first();
 
-        // Verificar contraseña
-        if ($user && Hash::check($request->contrasena, $user->contrasena_hash)) {
-            // Guardar ID de usuario en sesión
-            Session::put('usuario_id', $user->ID_USUARIO);
-
+        if ($user && Hash::check($request->password, $user->password)) {
+            Session::put('user_id', $user->id);
             return redirect()->route('home')->with('success', 'Inicio de sesión exitoso.');
         }
 
-        // Si falla login
-        return back()->withErrors(['correo' => 'Correo o contraseña incorrectos'])->withInput();
+        return back()->withErrors(['email' => 'Correo o contraseña incorrectos'])->withInput();
     }
 
-    // -------------------------------
-    // LOGOUT
-    // -------------------------------
+    // Logout
     public function logout()
     {
-        Session::forget('usuario_id');
+        Session::forget('user_id');
         return redirect()->route('login');
     }
 
-    // -------------------------------
-    // REGISTRO
-    // -------------------------------
+    // Mostrar formulario de registro
     public function showRegisterForm()
     {
         return view('auth.registro');
     }
 
+    // Registro
     public function register(Request $request)
     {
-        // Validaciones
         $request->validate([
-            'nombre' => 'required|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/',
-            'correo' => 'required|email|unique:usuario,correo',
-            'telefono' => 'nullable|digits:10', // 10 dígitos numéricos
-            'cedula' => 'required|numeric',
+            'name' => 'required|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/',
+            'email' => 'required|email|unique:users,email',
+            'telefono' => 'nullable|digits:10',
+            'cedula' => 'nullable|numeric',
             'direccion' => 'nullable|string',
             'codigo_vigilante' => 'nullable|numeric',
-            'contrasena' => 'required|min:6|confirmed', // Verifica campo contrasena_confirmation
             'rol' => 'required|integer|between:1,4',
+            'password' => 'required|min:6|confirmed',
         ]);
 
-        // Crear usuario
         User::create([
-            'nombre_usuario' => $request->nombre,
-            'correo' => $request->correo,
+            'name' => $request->name,
+            'email' => $request->email,
             'telefono' => $request->telefono,
             'cedula' => $request->cedula,
             'direccion' => $request->direccion,
             'codigo_vigilante' => $request->codigo_vigilante,
-            'contrasena_hash' => Hash::make($request->contrasena),
-            'fk_id_rol' => $request->rol,
+            'rol' => $request->rol,
+            'password' => Hash::make($request->password),
         ]);
 
         return redirect()->route('login')->with('success', 'Usuario registrado correctamente. Inicia sesión.');
