@@ -20,6 +20,9 @@ Route::view('/politica', 'politica')->name('politica');
 Route::view('/terminos', 'terminos')->name('terminos');
 Route::view('/faq', 'faq')->name('faq');
 
+// NUEVA RUTA PARA EL INDEX2 (redirección del login)
+Route::view('/index2', 'index2')->name('index2');
+
 // Rutas de Login y Registro
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
