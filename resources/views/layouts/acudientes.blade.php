@@ -11,7 +11,7 @@
 
     <div class="row g-4">
         <div class="col-md-4">
-            <a href="{{ route('personal') }}">
+            <a href="{{ route('personal.index') }}">
                 <div class="card dashboard-card text-center clickable" id="cardUsuarios">
                     <div class="card-body">
                         <h5 class="card-title">Personal</h5>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="col-md-4">
-            <a href="{{ route('estudiantes') }}">
+            <a href="{{ route('estudiantes.index') }}">
                 <div class="card dashboard-card text-center clickable" id="cardEstudiantes">
                     <div class="card-body">
                         <h5 class="card-title">Estudiantes</h5>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="col-md-4">
-            <a href="{{ route('docentes') }}">
+            <a href="{{ route('docentes.index') }}">
                 <div class="card dashboard-card text-center clickable" id="cardAdministradores">
                     <div class="card-body">
                         <h5 class="card-title">Docentes</h5>
@@ -43,7 +43,7 @@
         <h2 class="text-center mb-4">Administrativos</h2>
 
         <div class="col-md-4">
-            <a href="{{ route('oficinas') }}">
+            <a href="{{ route('oficinas.index') }}">
                 <div class="card dashboard-card text-center clickable" id="cardDocentes">
                     <div class="card-body">
                         <h5 class="card-title">Oficinas</h5>
@@ -53,7 +53,7 @@
         </div>
 
         <div class="col-md-4">
-            <a href="{{ route('vigilantes') }}">
+            <a href="{{ route('vigilantes.index') }}">
                 <div class="card dashboard-card text-center clickable" id="cardCursos">
                     <div class="card-body">
                         <h5 class="card-title">Vigilantes</h5>
@@ -63,7 +63,7 @@
         </div>
 
         <div class="col-md-4">
-            <a href="{{ route('enfermeria') }}">
+            <a href="{{ route('enfermeria.index') }}">
                 <div class="card dashboard-card text-center clickable" id="cardMinutas">
                     <div class="card-body">
                         <h5 class="card-title">Enfermería</h5>
@@ -75,7 +75,7 @@
         <h2 class="text-center mb-4">Servicios</h2>
 
         <div class="col-md-4">
-            <a href="{{ route('parqueadero') }}">
+            <a href="{{ route('parqueadero.index') }}">
                 <div class="card dashboard-card text-center clickable" id="cardParqueadero">
                     <div class="card-body">
                         <h5 class="card-title">Parqueadero</h5>
@@ -85,7 +85,7 @@
         </div>
 
         <div class="col-md-4">
-            <a href="{{ route('visitantes') }}">
+            <a href="{{ route('visitantes.index') }}">
                 <div class="card dashboard-card text-center clickable" id="cardOpiniones">
                     <div class="card-body">
                         <h5 class="card-title">Visitantes</h5>
@@ -95,7 +95,7 @@
         </div>
 
         <div class="col-md-4">
-            <a href="{{ route('acudientes') }}">
+            <a href="{{ route('acudientes.index') }}">
                 <div class="card dashboard-card text-center clickable" id="cardOpiniones">
                     <div class="card-body">
                         <h5 class="card-title">Acudientes</h5>

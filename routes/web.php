@@ -31,6 +31,20 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Rutas de Registro
 Route::get('/registro', [AuthController::class, 'showRegisterForm'])->name('registro');
 Route::post('/registro', [AuthController::class, 'register'])->name('registro.submit');
+// Sección Usuarios
+Route::view('/personal', 'layouts.personal')->name('personal');
+Route::view('/estudiantes', 'layouts.estudiantes')->name('estudiantes');
+Route::view('/docentes', 'layouts.docentes')->name('docentes');
+
+// Sección Administrativos
+Route::view('/oficinas', 'layouts.oficinas')->name('oficinas');
+Route::view('/vigilantes', 'layouts.vigilantes')->name('vigilantes');
+Route::view('/enfermeria', 'layouts.enfermeria')->name('enfermeria');
+
+// Sección Servicios
+Route::view('/parqueadero', 'layouts.parqueadero')->name('parqueadero');
+Route::view('/visitantes', 'layouts.visitantes')->name('visitantes');
+Route::view('/acudientes', 'layouts.acudientes')->name('acudientes');
 
 // Ejemplo de ruta protegida (solo usuarios autenticados)
 Route::middleware('auth')->group(function () {
