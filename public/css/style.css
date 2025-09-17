@@ -1,14 +1,61 @@
-/* === HERO SECTION === */
+
+/* === ESTILOS GENERALES === */
 .hero-section {
-    background: linear-gradient(rgb(167, 181, 244), rgb(167, 181, 244)),
-        url('https://via.placeholder.com/1500x800?text=Edificio+Educativo') no-repeat center center;
+    position: relative;
+    background: url('https://via.placeholder.com/1500x800?text=Edificio+Educativo') no-repeat center center;
     background-size: cover;
     color: white;
-    padding: 190px 10px 80px;
-    text-shadow: 2px 2px 4px rgb(167, 181, 244);
+    padding: 60px 15px; /* Reducido */
     text-align: center;
-    scroll-margin-top: 120px;
+    overflow: hidden;
+    border-radius: 15px;
 }
+
+
+/* Overlay usando div */
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 51, 153, 0.6); /* Ajusta la transparencia */
+    z-index: 1;
+    border-radius: 15px;
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 2; /* Contenido sobre el overlay */
+}
+
+.hero-section h1,
+.hero-section p {
+    color: white;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+}
+
+.hero-section a.btn-fondo {
+    border-radius: 50px;
+    padding: 12px 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.hero-section a.btn-fondo:hover {
+    background-color: white;
+    color: rgb(0, 51, 153);
+}
+
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-section p {
+        font-size: 1.1rem;
+    }
+}
+
 
 /* === ERRORES DE VALIDACIÓN === */
 .error {

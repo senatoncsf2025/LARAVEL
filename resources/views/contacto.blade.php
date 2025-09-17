@@ -2,20 +2,28 @@
 
 @section('content')
 <!-- Hero Section -->
-<section id="inicio" class="hero-section text-center py-5 mt-5 bg-dark text-white rounded">
-    <div class="container">
+<link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+<section id="inicio" class="hero-section text-center position-relative">
+
+    <!-- Overlay -->
+    <div class="hero-overlay"></div>
+
+    <div class="container position-relative">
         <h1 class="display-3 fw-bold mb-4">BIENVENIDOS A SIORTISOFT</h1>
         <p class="lead mb-5">
             Soluciones innovadoras y seguras para colegios, universidades y entidades gubernamentales.
         </p>
-        <a href="{{ route('soluciones') }}" class="btn btn-outline-light btn-lg me-2">
+        <a href="{{ route('soluciones') }}" class="btn btn-fondo btn-lg me-2">
             Descubre Nuestras Soluciones
         </a>
-        <a href="https://web.whatsapp.com/" target="_blank" class="btn btn-outline-light btn-lg">
-            Contáctanos
-        </a>
+       <a href="https://web.whatsapp.com/" target="_blank" class="btn btn-fondo btn-lg">
+    Contáctanos
+</a>
+
     </div>
 </section>
+
 
 <!-- Formulario de Contacto -->
 <div class="container py-5">

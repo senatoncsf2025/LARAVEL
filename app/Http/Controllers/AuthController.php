@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -18,15 +18,16 @@ class AuthController extends Controller
     // Login
     public function login(Request $request)
     {
-        $request->validate([
+        $credentials = $request->validate([
             'email'    => 'required|email',
             'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        // Intentar autenticar al usuario
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate(); // Seguridad: regenerar sesión
 
-        if ($user && Hash::check($request->password, $user->password)) {
-            Session::put('user_id', $user->id);
+            $user = Auth::user();
 
             switch ($user->rol) {
                 case 1: // Administrador
@@ -39,19 +40,25 @@ class AuthController extends Controller
                         ->with('info', 'Por favor regístrate para continuar.');
 
                 default:
+                    Auth::logout();
                     return redirect()->route('login')
                         ->withErrors(['email' => 'Rol no reconocido, contacta al administrador.']);
             }
         }
 
-        return back()->withErrors(['email' => 'Correo o contraseña incorrectos'])
-                     ->withInput();
+        return back()->withErrors([
+            'email' => 'Correo o contraseña incorrectos',
+        ])->withInput();
     }
 
     // Logout
-    public function logout()
+    public function logout(Request $request)
     {
-        Session::forget('user_id');
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect()->route('login');
     }
 

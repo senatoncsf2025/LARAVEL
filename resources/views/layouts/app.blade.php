@@ -6,7 +6,6 @@
     <title>SIORTISOFT</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -15,13 +14,36 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">inicio sesion</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('registro') }}">registrarse</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('vision') }}">Visión</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('contacto.index') }}">Contacto</a></li>
+                    {{-- Inicio --}}
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Inicio</a>
+                    </li>
+
+                    {{-- Solo mostrar si el usuario NO está logueado --}}
+                    @guest
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}">Iniciar sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('registro') ? 'active' : '' }}" href="{{ route('registro') }}">Registrarse</a>
+                        </li>
+                    @endguest
+
+                    {{-- Si está logueado, mostrar link al panel e incluir logout --}}
+                    @auth
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('index2') ? 'active' : '' }}" href="{{ route('index2') }}">Panel</a>
+                        </li>
+                        <li class="nav-item">
+                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                @csrf
+                                <button class="btn btn-link nav-link" type="submit">Cerrar sesión</button>
+                            </form>
+                        </li>
+                    @endauth
                 </ul>
             </div>
         </div>
@@ -32,21 +54,17 @@
     </main>
 
     <footer class="bg-dark text-white text-center py-4 mt-5">
-    <div class="container">
-        <p class="mb-3">© 2025 SIORTISOFT. Todos los derechos reservados.</p>
-
-        <!-- 🔗 Íconos de redes sociales -->
-        <div class="footer-icons d-flex justify-content-center gap-4 mb-2">
-            <a href="https://web.whatsapp.com/" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
-            <a href="https://www.facebook.com/" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-            <a href="https://x.com/" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
-            <a href="https://www.instagram.com/" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <div class="container">
+            <p class="mb-3">© 2025 SIORTISOFT. Todos los derechos reservados.</p>
+            <div class="footer-icons d-flex justify-content-center gap-4 mb-2">
+                <a href="https://web.whatsapp.com/" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                <a href="https://www.facebook.com/" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                <a href="https://x.com/" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+                <a href="https://www.instagram.com/" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            </div>
+            <small>Diseñado con ❤️ por JARETECH</small>
         </div>
-
-        <small>Diseñado con ❤️ por JARETECH</small>
-    </div>
-</footer>
-
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 <div class="container d-flex justify-content-center align-items-center flex-column py-5">
     <form class="login-form text-center bg-white p-4 shadow rounded w-100" method="POST" action="{{ route('login.submit') }}">
         @csrf

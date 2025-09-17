@@ -3,6 +3,7 @@
 @section('title', 'Consulta y Registro')
 
 @section('content')
+<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 <div class="container py-5">
     <h2 class="text-center mb-4">Bienvenido</h2>
 

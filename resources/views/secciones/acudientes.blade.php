@@ -3,6 +3,7 @@
 @section('title', 'Panel Principal - SIORTISOFT')
 
 @section('content')
+<link href="{{ asset('css/style.css') }}" rel="stylesheet"> 
 <div style="padding-top: 120px;"></div>
 
 <main class="container my-4">

@@ -4,6 +4,7 @@
 
 @section('content')
 <div style="padding-top: 120px;"></div>
+<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
 <main class="container my-4">
     <h1 class="text-center mb-4">Panel Principal</h1>
