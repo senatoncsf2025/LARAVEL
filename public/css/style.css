@@ -1,301 +1,304 @@
-
 /* === ESTILOS GENERALES === */
 .hero-section {
-    position: relative;
-    background: url('https://via.placeholder.com/1500x800?text=Edificio+Educativo') no-repeat center center;
-    background-size: cover;
-    color: white;
-    padding: 60px 15px; /* Reducido */
-    text-align: center;
-    overflow: hidden;
-    border-radius: 15px;
+    position: relative; /* posición relativa para que los hijos absolutos se ubiquen respecto a este contenedor */
+    background: url('https://via.placeholder.com/1500x800?text=Edificio+Educativo') no-repeat center center; /* imagen de fondo centrada sin repetirse */
+    background-size: cover; /* la imagen de fondo cubre todo el área */
+    color: rgb(255, 255, 255); /* color del texto en blanco */
+    padding: 60px 15px; /* espacio interno arriba/abajo 60px y laterales 15px */
+    text-align: center; /* centra el texto dentro del contenedor */
+    overflow: hidden; /* oculta cualquier contenido que se salga del área */
+    border-radius: 15px; /* bordes redondeados de 15px */
 }
 
-
-/* Overlay usando div */
+/* Overlay oscuro para superponer sobre la imagen */
 .hero-overlay {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 51, 153, 0.6); /* Ajusta la transparencia */
-    z-index: 1;
-    border-radius: 15px;
+    position: absolute; /* se posiciona respecto al .hero-section */
+    top: 0; /* desde arriba */
+    left: 0; /* desde la izquierda */
+    width: 100%; /* ocupa todo el ancho */
+    height: 100%; /* ocupa todo el alto */
+    background-color: rgb(0, 0, 0); /* color de fondo negro */
+    z-index: 1; /* se coloca debajo del contenido pero sobre la imagen */
+    border-radius: 15px; /* mantiene los bordes redondeados */
 }
 
 .hero-section .container {
-    position: relative;
-    z-index: 2; /* Contenido sobre el overlay */
+    position: relative; /* para poder usar z-index */
+    z-index: 2; /* se asegura de estar sobre el overlay */
 }
 
 .hero-section h1,
 .hero-section p {
-    color: white;
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+    color: rgba(184, 188, 252, 0.706); /* color del texto con transparencia */
+    text-shadow: 2px 2px 6px rgba(0, 51, 153, 0.6); /* sombra azulada al texto */
 }
 
 .hero-section a.btn-fondo {
-    border-radius: 50px;
-    padding: 12px 30px;
-    font-weight: 600;
-    transition: all 0.3s ease;
+    border-radius: 50px; /* bordes redondeados tipo pastilla */
+    padding: 12px 30px; /* espacio interno vertical 12px y horizontal 30px */
+    font-weight: 600; /* texto seminegrita */
+    transition: all 0.3s ease; /* transición suave en hover */
 }
 
 .hero-section a.btn-fondo:hover {
-    background-color: white;
-    color: rgb(0, 51, 153);
+    background-color: rgb(0, 0, 0); /* fondo negro al pasar el mouse */
+    color: rgb(255, 255, 255); /* texto blanco al pasar el mouse */
+    border: 1px solid rgb(85, 109, 203); /* borde azul al pasar el mouse */
 }
 
+/* === RESPONSIVE PARA HERO === */
 @media (max-width: 768px) {
     .hero-section h1 {
-        font-size: 2.2rem;
+        font-size: 2.2rem; /* reduce tamaño del título */
     }
 
     .hero-section p {
-        font-size: 1.1rem;
+        font-size: 1.1rem; /* reduce tamaño del párrafo */
     }
 }
 
-
 /* === ERRORES DE VALIDACIÓN === */
 .error {
-    color: red;
-    font-size: 0.9rem;
-    margin-top: 5px;
-    text-align: left;
+    color: red; /* texto en rojo */
+    font-size: 0.9rem; /* tamaño más pequeño */
+    margin-top: 5px; /* espacio superior de 5px */
+    text-align: left; /* texto alineado a la izquierda */
 }
 
 /* === CONTENEDOR GENERAL === */
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
+    max-width: 1200px; /* ancho máximo 1200px */
+    margin: 0 auto; /* centrado horizontal */
+    padding: 0 15px; /* espacio lateral de 15px */
 }
 
+/* === ENLACES GENERALES === */
 a {
-    text-decoration: none;
-    color: inherit;
-    outline: none;
+    text-decoration: none; /* sin subrayado */
+    color: inherit; /* hereda el color del padre */
+    outline: none; /* sin borde de enfoque */
 }
 
 a:focus {
-    outline: none;
-    box-shadow: none;
+    outline: none; /* sin borde cuando recibe foco */
+    box-shadow: none; /* sin sombra al enfocar */
 }
 
 /* === NAVBAR === */
 nav {
-    padding: 15px 0 10px;
+    padding: 15px 0 10px; /* espacio arriba 15px y abajo 10px */
 }
 
 .navbar-brand img {
-    height: 100px;
-    margin-right: 10px;
+    height: 100px; /* altura de logo 100px */
+    margin-right: 10px; /* espacio derecho de 10px */
 }
 
 .navbar-nav .dropdown:hover>.dropdown-menu {
-    display: block;
+    display: block; /* muestra menú al pasar mouse */
 }
 
 .navbar-nav .nav-link.dropdown-toggle {
-    color: white !important;
+    color: rgb(255, 255, 255) !important; /* enlaces blancos */
 }
 
 .navbar-nav .nav-link.dropdown-toggle:hover {
-    color: #ccc !important;
+    color: #ccc !important; /* gris al pasar mouse */
+}
+
+.navbar-brand {
+    color: rgb(255, 255, 255); /* texto blanco */
+    font-family: 'Santiole Script', cursive;
+    font-weight: bold; /* fuente personalizada */
 }
 
 .dropdown-menu {
-    background-color: black;
-    border: 1px solid black;
+    background-color: black; /* fondo negro */
+    border: 1px solid black; /* borde negro */
 }
 
 .dropdown-item {
-    color: white;
+    color: white; /* texto blanco */
 }
 
 .dropdown-item:hover {
-    background-color: #333;
-    color: white;
+    background-color: #333; /* fondo gris oscuro en hover */
+    color: white; /* texto blanco */
 }
 
 /* === ÍCONOS DE CARACTERÍSTICAS === */
 .feature-icon {
-    font-size: 3.5rem;
-    color: rgb(167, 181, 244);
-    margin-bottom: 20px;
+    font-size: 3.5rem; /* icono grande */
+    color: rgb(167, 181, 244); /* color azul suave */
+    margin-bottom: 20px; /* espacio inferior 20px */
 }
 
 /* === TARJETAS PERSONALIZADAS === */
 .card-custom {
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* animaciones suaves */
+    border: none; /* sin borde */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* sombra ligera */
 }
 
 .card-custom:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px); /* se levanta 5px al pasar mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* sombra más fuerte */
 }
 
 /* === FONDO AZUL CLARO === */
 .bg-light-blue {
-    background-color: #f0f8ff;
+    background-color: #f0f8ff; /* color azul muy claro */
 }
 
 /* === FOOTER === */
 footer {
-    background-color: black;
-    color: white;
-    padding: 20px 0;
-    font-size: 14px;
-    width: 100%;
+    background-color: black; /* fondo negro */
+    color: white; /* texto blanco */
+    padding: 20px 0; /* espacio interno vertical */
+    font-size: 14px; /* tamaño texto */
+    width: 100%; /* ancho completo */
 }
 
 .footer-horizontal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+    display: flex; /* contenedor flexible */
+    flex-direction: column; /* dirección en columna */
+    align-items: center; /* contenido centrado */
+    gap: 10px; /* espacio entre elementos */
 }
 
 .footer-horizontal p {
-    margin: 0;
-    color: white;
-    font-size: 0.9rem;
-}
-
-.footer-horizontal p {
-    margin: 0;
-    white-space: nowrap;
+    margin: 0; /* sin margen */
+    color: white; /* texto blanco */
+    font-size: 0.9rem; /* texto pequeño */
+    white-space: nowrap; /* sin saltos de línea */
 }
 
 .footer-icons i {
-    font-size: 1.5rem;
-    color: white;
-    transition: color 0.3s;
+    font-size: 1.5rem; /* iconos grandes */
+    color: white; /* color blanco */
+    transition: color 0.3s; /* transición suave al cambiar color */
 }
 
 .footer-icons a:hover i {
-    color: #00d1b2;
+    color: #00d1b2; /* iconos celestes en hover */
 }
 
 .footer-icons,
 .footer-links {
-    display: flex;
-    gap: 20px;
-    align-items: center;
+    display: flex; /* elementos en fila */
+    gap: 20px; /* espacio entre ellos */
+    align-items: center; /* centrado vertical */
 }
 
 .footer-links a,
 .footer-icons a {
-    color: white;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
+    color: white; /* enlaces blancos */
+    text-decoration: none; /* sin subrayado */
+    font-size: 1rem; /* tamaño normal */
+    transition: color 0.3s ease; /* cambio de color suave */
 }
 
 .footer-links a:hover,
 .footer-icons a:hover {
-    color: #00d1b2;
+    color: #00d1b2; /* enlaces celestes en hover */
 }
 
-/* === VISIÓN SECTION === */
+/* === SECCIÓN VISIÓN === */
 .vision-section {
-    padding: 80px 0;
-    background-color: #f8f9fa;
-    color: #343a40;
+    padding: 80px 0; /* espacio interno vertical */
+    background-color: #f8f9fa; /* fondo gris claro */
+    color: #343a40; /* texto gris oscuro */
 }
 
 .vision-title {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 40px;
-    color: black;
+    font-size: 3rem; /* texto grande */
+    font-weight: 700; /* negrita */
+    margin-bottom: 40px; /* espacio inferior */
+    color: black; /* color negro */
 }
 
 .vision-item {
-    text-align: center;
-    margin-bottom: 30px;
+    text-align: center; /* texto centrado */
+    margin-bottom: 30px; /* espacio inferior */
 }
 
 .vision-item img {
-    max-width: 150px;
-    height: auto;
-    margin-bottom: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 150px; /* ancho máximo de imagen */
+    height: auto; /* altura proporcional */
+    margin-bottom: 20px; /* espacio inferior */
+    border-radius: 15px; /* bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* sombra ligera */
 }
 
 .vision-item h4 {
-    font-weight: 600;
-    color: #495057;
+    font-weight: 600; /* texto seminegrita */
+    color: #495057; /* gris oscuro */
 }
 
 .vision-item p {
-    font-size: 1.1rem;
-    line-height: 1.6;
+    font-size: 1.1rem; /* texto mediano */
+    line-height: 1.6; /* interlineado */
 }
 
-/* === MISIÓN SECTION === */
+/* === SECCIÓN MISIÓN === */
 .mision-section {
-    padding: 80px 0;
-    background-color: #ffffff;
-    color: #343a40;
-    border-bottom: 1px solid #e9ecef;
+    padding: 80px 0; /* espacio interno vertical */
+    background-color: #ffffff; /* fondo blanco */
+    color: #343a40; /* texto gris oscuro */
+    border-bottom: 1px solid #e9ecef; /* borde inferior gris claro */
 }
 
 .mision-title {
-    font-size: 2.8rem;
-    font-weight: 700;
-    margin-bottom: 30px;
-    color: black;
+    font-size: 2.8rem; /* título grande */
+    font-weight: 700; /* negrita */
+    margin-bottom: 30px; /* espacio inferior */
+    color: black; /* texto negro */
 }
 
 .mision-text {
-    font-size: 1.25rem;
-    line-height: 1.8;
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
+    font-size: 1.25rem; /* texto más grande */
+    line-height: 1.8; /* interlineado amplio */
+    max-width: 800px; /* ancho máximo */
+    margin: 0 auto; /* centrado horizontal */
+    text-align: center; /* centrado de texto */
 }
 
 .mision-icon {
-    font-size: 4rem;
-    color: black;
-    margin-bottom: 20px;
+    font-size: 4rem; /* icono grande */
+    color: black; /* color negro */
+    margin-bottom: 20px; /* espacio inferior */
 }
 
 /* === BOTÓN PERSONALIZADO === */
 .btn-fondo {
-    background-color: rgb(167, 181, 244);
-    color: white;
-    border: 1px solid white;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: rgb(167, 181, 244); /* fondo azul claro */
+    color: rgb(0, 0, 0); /* texto blanco */
+    border: 1px solid white; /* borde blanco */
+    transition: background-color 0.3s ease, color 0.3s ease; /* animación suave */
 }
 
 .btn-fondo:hover {
-    background-color: white;
-    color: rgb(167, 181, 244);
+    background-color: rgb(255, 255, 255); /* fondo blanco al pasar mouse */
+    color: rgb(167, 181, 244); /* texto azul al pasar mouse */
 }
 
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
     .hero-section h1 {
-        font-size: 2.2rem;
+        font-size: 2.2rem; /* título más chico */
     }
 
     .hero-section p {
-        font-size: 1.1rem;
+        font-size: 1.1rem; /* párrafo más chico */
     }
 
     .navbar-brand img {
-        height: 70px;
+        height: 70px; /* logo más pequeño */
     }
 
     .footer-horizontal {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
+        flex-direction: column; /* organiza en columna */
+        gap: 15px; /* más espacio entre elementos */
+        text-align: center; /* centra texto */
     }
 }
