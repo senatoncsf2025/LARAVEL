@@ -1,114 +1,87 @@
 @extends('layouts.app')
 
-@section('title', 'Panel Principal - SIORTISOFT')
+@section('title', 'Consulta y Registro')
 
 @section('content')
-<link href="{{ asset('css/style.css') }}" rel="stylesheet"> 
-<div style="padding-top: 120px;"></div>
+<link href="{{ asset('css/style.css') }}" rel="stylesheet">
+<div class="container py-5">
+    <h2 class="text-center mb-4">Bienvenido</h2>
 
-<main class="container my-4">
-    <h1 class="text-center mb-4">Panel Principal</h1>
-    <h2 class="text-center mb-4">Usuarios</h2>
-
-    <div class="row g-4">
-        <div class="col-md-4">
-            <a href="{{ route('personal.index') }}">
-                <div class="card dashboard-card text-center clickable" id="cardUsuarios">
-                    <div class="card-body">
-                        <h5 class="card-title">Personal</h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a href="{{ route('estudiantes.index') }}">
-                <div class="card dashboard-card text-center clickable" id="cardEstudiantes">
-                    <div class="card-body">
-                        <h5 class="card-title">Estudiantes</h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a href="{{ route('docentes.index') }}">
-                <div class="card dashboard-card text-center clickable" id="cardAdministradores">
-                    <div class="card-body">
-                        <h5 class="card-title">Docentes</h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <h2 class="text-center mb-4">Administrativos</h2>
-
-        <div class="col-md-4">
-            <a href="{{ route('oficinas.index') }}">
-                <div class="card dashboard-card text-center clickable" id="cardDocentes">
-                    <div class="card-body">
-                        <h5 class="card-title">Oficinas</h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a href="{{ route('vigilantes.index') }}">
-                <div class="card dashboard-card text-center clickable" id="cardCursos">
-                    <div class="card-body">
-                        <h5 class="card-title">Vigilantes</h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a href="{{ route('enfermeria.index') }}">
-                <div class="card dashboard-card text-center clickable" id="cardMinutas">
-                    <div class="card-body">
-                        <h5 class="card-title">Enfermería</h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <h2 class="text-center mb-4">Servicios</h2>
-
-        <div class="col-md-4">
-            <a href="{{ route('parqueadero.index') }}">
-                <div class="card dashboard-card text-center clickable" id="cardParqueadero">
-                    <div class="card-body">
-                        <h5 class="card-title">Parqueadero</h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a href="{{ route('visitantes.index') }}">
-                <div class="card dashboard-card text-center clickable" id="cardOpiniones">
-                    <div class="card-body">
-                        <h5 class="card-title">Visitantes</h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a href="{{ route('acudientes.index') }}">
-                <div class="card dashboard-card text-center clickable" id="cardOpiniones">
-                    <div class="card-body">
-                        <h5 class="card-title">Acudientes</h5>
-                    </div>
-                </div>
-            </a>
-        </div>
+    <!-- Botones principales -->
+    <div class="text-center mb-4">
+        <button class="btn btn-primary mx-2" id="btnConsulta">Consulta</button>
+        <button class="btn btn-success mx-2" id="btnRegistro">Registro</button>
     </div>
-</main>
+
+    <!-- Formulario de Consulta -->
+    <div id="formConsulta" class="card p-4 d-none">
+        <h4 class="mb-3">Consulta</h4>
+        <form>
+            <div class="mb-3">
+                <label for="documento" class="form-label">Documento <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="documento" name="documento" required>
+            </div>
+            <div class="mb-3">
+                <label for="codigo_pc" class="form-label">Código del PC (opcional)</label>
+                <input type="text" class="form-control" id="codigo_pc" name="codigo_pc">
+            </div>
+            <button type="submit" class="btn btn-primary">Consultar</button>
+        </form>
+    </div>
+
+    <!-- Formulario de Registro -->
+    <div id="formRegistro" class="card p-4 d-none mt-4">
+        <h4 class="mb-3">Registro</h4>
+        <form>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="apellido" class="form-label">Apellido <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="apellido" name="apellido" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="correo" class="form-label">Correo <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="correo" name="correo" required>
+            </div>
+            <div class="mb-3">
+                <label for="codigo_portatil" class="form-label">Código Portátil (últimos 4 del serial) <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="codigo_portatil" name="codigo_portatil" maxlength="4" pattern="\d{4}" placeholder="Ej: 1234" required>
+            </div>
+            <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" id="telefono" name="telefono" pattern="\d{10}" placeholder="10 dígitos" required>
+            </div>
+            <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="direccion" name="direccion" required>
+            </div>
+            <button type="submit" class="btn btn-success">Registrar</button>
+        </form>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{{ asset('js/dashboard.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const btnConsulta = document.getElementById('btnConsulta');
+    const btnRegistro = document.getElementById('btnRegistro');
+    const formConsulta = document.getElementById('formConsulta');
+    const formRegistro = document.getElementById('formRegistro');
+
+    btnConsulta.addEventListener('click', () => {
+        formConsulta.classList.remove('d-none');
+        formRegistro.classList.add('d-none');
+    });
+
+    btnRegistro.addEventListener('click', () => {
+        formRegistro.classList.remove('d-none');
+        formConsulta.classList.add('d-none');
+    });
+});
+</script>
 @endpush
