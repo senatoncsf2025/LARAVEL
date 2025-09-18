@@ -11,22 +11,38 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabla de usuarios
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            // Datos adicionales
+            $table->string('telefono')->nullable();
+            $table->string('codigo_verificacion')->nullable();
+            $table->boolean('telefono_verificado')->default(false);
+            $table->integer('rol')->default(4); // 1=Administrador, 2=Vigilante, 3=Visitante, 4=Usuario corriente
+            $table->string('codigo_vigilante')->nullable();
+            $table->string('cargo')->nullable(); // Solo para vigilantes
+            $table->string('cedula')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('genero')->nullable();
+            $table->date('fecha_nacimiento')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });
 
+        // Tabla para tokens de reinicio de contraseña
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
+        // Tabla de sesiones
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();

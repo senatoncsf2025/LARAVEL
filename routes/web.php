@@ -29,6 +29,8 @@
     Route::view('/politica', 'politica')->name('politica');
     Route::view('/terminos', 'terminos')->name('terminos');
     Route::view('/faq', 'faq')->name('faq');
+    Route::view('/registro_admin', 'auth.registro_admin')->name('registro_admin');
+
 
     // Rutas de Login y Registro públicas
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
