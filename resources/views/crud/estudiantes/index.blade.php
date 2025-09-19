@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Gestión de Estudiantes')
+@section('title', 'Gestión de {{ ucfirst($rol) }}')
 
 @section('content')
 <div class="container py-5">
-    <h1 class="mb-4">Gestión de Estudiantes</h1>
+    <h1 class="mb-4">Gestión de {{ ucfirst($rol) }}</h1>
 
-    <a href="{{ route('estudiantes.create') }}" class="btn btn-success mb-3">+ Nuevo Estudiante</a>
+    <a href="{{ route($rol . '.create') }}" class="btn btn-success mb-3">+ Nuevo {{ ucfirst(Str::singular($rol)) }}</a>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -28,44 +28,46 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($estudiantes as $estudiante)
+            @forelse($usuarios as $usuario)
                 <tr>
-                    <td>{{ $estudiante->nombre }}</td>
-                    <td>{{ $estudiante->apellido }}</td>
-                    <td>{{ $estudiante->cedula }}</td>
-                    <td>{{ $estudiante->telefono }}</td>
-                    <td>{{ $estudiante->email }}</td>
-                    <td>{{ $estudiante->direccion }}</td>
+                    <td>{{ $usuario->nombre }}</td>
+                    <td>{{ $usuario->apellido }}</td>
+                    <td>{{ $usuario->cedula }}</td>
+                    <td>{{ $usuario->telefono }}</td>
+                    <td>{{ $usuario->email }}</td>
+                    <td>{{ $usuario->direccion }}</td>
                     <td>
-                        @if($estudiante->trae_vehiculo)
-                            🚗 {{ $estudiante->placa }} ({{ $estudiante->marca }} {{ $estudiante->modelo }}, {{ $estudiante->color }})
+                        @if($usuario->trae_vehiculo)
+                            🚗 {{ $usuario->placa }} ({{ $usuario->marca }} {{ $usuario->modelo }}, {{ $usuario->color }})
                         @else
                             -
                         @endif
                     </td>
                     <td>
-                        @if($estudiante->trae_pc)
-                            💻 {{ $estudiante->codigo_pc }} (Serial: {{ $estudiante->serial_pc }})
+                        @if($usuario->trae_pc)
+                            💻 {{ $usuario->codigo_pc }} (Serial: {{ $usuario->serial_pc }})
                         @else
                             -
                         @endif
                     </td>
                     <td>
-                        @if($estudiante->activo)
+                        @if($usuario->activo)
                             <span class="badge bg-success">Activo</span>
                         @else
                             <span class="badge bg-secondary">Inactivo</span>
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('estudiantes.edit', $estudiante->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                        <form action="{{ route('estudiantes.destroy', $estudiante->id) }}" method="POST" class="d-inline">
+                        <a href="{{ route($rol . '.edit', $usuario->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                        <form action="{{ route($rol . '.destroy', $usuario->id) }}" method="POST" class="d-inline">
                             @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Inactivar</button>
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Inactivar este registro?')">Inactivar</button>
                         </form>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr><td colspan="10">No hay registros</td></tr>
+            @endforelse
         </tbody>
     </table>
 </div>

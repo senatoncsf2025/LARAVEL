@@ -14,14 +14,7 @@ class UserExternoController extends Controller
     {
         $usuarios = UserExterno::where('rol_externo', $rol)->get();
 
-        // Creamos un nombre de variable dinámico según el rol
-        $variableName = $rol;
-
-        // Pasamos la variable con el nombre correcto a la vista
-        return view("crud.$rol.index", [
-            $variableName => $usuarios,
-            'rol' => $rol
-        ]);
+        return view("crud.$rol.index", compact('usuarios', 'rol'));
     }
 
     /**
@@ -60,7 +53,8 @@ class UserExternoController extends Controller
             'activo' => true,
         ]);
 
-        return redirect()->route("$rol.index")->with('success', ucfirst($rol) . ' registrado correctamente.');
+        return redirect()->route("$rol.index")
+            ->with('success', ucfirst($rol) . ' registrado correctamente.');
     }
 
     /**
@@ -70,10 +64,7 @@ class UserExternoController extends Controller
     {
         $usuario = UserExterno::where('rol_externo', $rol)->findOrFail($id);
 
-        return view("crud.$rol.edit", [
-            'usuario' => $usuario,
-            'rol' => $rol
-        ]);
+        return view("crud.$rol.edit", compact('usuario', 'rol'));
     }
 
     /**
@@ -102,7 +93,8 @@ class UserExternoController extends Controller
 
         $usuario->update($request->all());
 
-        return redirect()->route("$rol.index")->with('success', ucfirst($rol) . ' actualizado correctamente.');
+        return redirect()->route("$rol.index")
+            ->with('success', ucfirst($rol) . ' actualizado correctamente.');
     }
 
     /**
@@ -113,6 +105,7 @@ class UserExternoController extends Controller
         $usuario = UserExterno::where('rol_externo', $rol)->findOrFail($id);
         $usuario->update(['activo' => false]);
 
-        return redirect()->route("$rol.index")->with('success', ucfirst($rol) . ' inactivado correctamente.');
+        return redirect()->route("$rol.index")
+            ->with('success', ucfirst($rol) . ' inactivado correctamente.');
     }
 }
