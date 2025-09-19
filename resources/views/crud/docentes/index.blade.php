@@ -11,6 +11,9 @@
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
+    <a href="{{ route($rol . '.reporte') }}" class="btn btn-info mb-3" target="_blank">
+    📄 Generar Reporte PDF
+</a>
 
     <table class="table table-bordered">
         <thead>

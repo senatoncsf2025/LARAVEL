@@ -77,9 +77,15 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
     $roles = [
-        'estudiantes', 'docentes', 'personal',
-        'oficinas', 'vigilantes', 'enfermeria',
-        'parqueadero', 'visitantes', 'acudientes'
+        'estudiantes',
+        'docentes',
+        'personal',
+        'oficinas',
+        'vigilantes',
+        'enfermeria',
+        'parqueadero',
+        'visitantes',
+        'acudientes'
     ];
 
     foreach ($roles as $rol) {
@@ -95,7 +101,12 @@ Route::middleware('auth')->group(function () {
             Route::put('/{id}', [UserExternoController::class, 'update'])
                 ->name("$rol.update")->defaults('rol', $rol);
             Route::delete('/{id}', [UserExternoController::class, 'destroy'])
-                ->name("$rol.destroy")->defaults('rol', $rol);
+                ->name("$rol.destroy")
+                ->defaults('rol', $rol);
+
+            // 👇 NUEVA RUTA PARA REPORTE
+            Route::get('/reporte', [UserExternoController::class, 'reporte'])
+                ->name("$rol.reporte")->defaults('rol', $rol);
         });
     }
 });

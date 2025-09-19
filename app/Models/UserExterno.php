@@ -18,24 +18,25 @@ class UserExterno extends Model
         'telefono',
         'direccion',
         'email',
-        'rol_externo',     // estudiante, docente, visitante, etc.
-        'codigo_pc',
-        'trae_vehiculo',
-        'placa',
-        'marca',
-        'modelo',
-        'color',
-        'trae_pc',
-        'serial_pc',
+        'rol_externo',   // estudiante, docente, visitante, etc.
         'fecha_visita',
         'horario',
-        'activo',          // 👈 importante para inactivar en vez de borrar
+        'activo',        // inactivar en vez de borrar
     ];
 
     protected $casts = [
-        'trae_vehiculo' => 'boolean',
-        'trae_pc'       => 'boolean',
-        'activo'        => 'boolean',
-        'fecha_visita'  => 'date',
+        'activo'       => 'boolean',
+        'fecha_visita' => 'date',
     ];
+
+    // Relaciones
+    public function vehiculo()
+    {
+        return $this->hasOne(Vehiculo::class, 'user_externo_id');
+    }
+
+    public function pc()
+    {
+        return $this->hasOne(Pc::class, 'user_externo_id');
+    }
 }
