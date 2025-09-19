@@ -19,41 +19,57 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    {{-- Inicio --}}
+
+                    {{-- Link Inicio (siempre visible) --}}
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}"
-                            href="{{ route('home') }}">Inicio</a>
+                           href="{{ route('home') }}">Inicio</a>
                     </li>
 
-                    {{-- Solo mostrar si el usuario NO está logueado --}}
+                    {{-- Si el usuario NO está logueado --}}
                     @guest
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}"
-                            href="{{ route('login') }}">Iniciar sesión</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('registro') ? 'active' : '' }}"
-                            href="{{ route('registro') }}">Registrarse</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}"
+                               href="{{ route('login') }}">Iniciar sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('registro') ? 'active' : '' }}"
+                               href="{{ route('registro') }}">Registrarse</a>
+                        </li>
                     @endguest
 
-                    {{-- Si está logueado, mostrar link al panel e incluir logout --}}
+                    {{-- Si el usuario SÍ está logueado --}}
                     @auth
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('index2') ? 'active' : '' }}"
-                            href="{{ route('index2') }}">Panel</a>
-                    </li>
-                    <li class="nav-item">
-                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                            @csrf
-                            <button class="btn btn-link nav-link" type="submit">Cerrar sesión</button>
-                        </form>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('registro_admin') }}" class="btn btn-link nav-link">Registro</a>
-                    </li>
+                        {{-- Link al panel (visible para admin y vigilantes) --}}
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('index2') ? 'active' : '' }}"
+                               href="{{ route('index2') }}">Panel</a>
+                        </li>
 
+                        {{-- Solo los administradores ven el Dashboard --}}
+                        @if(Auth::user()->rol == 1)
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"
+                                   href="{{ route('dashboard') }}">Usuarios</a>
+                            </li>
+                        @endif
+
+                        {{-- Botón de cierre de sesión --}}
+                        <li class="nav-item">
+                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                @csrf
+                                <button class="btn btn-link nav-link" type="submit">Cerrar sesión</button>
+                            </form>
+                        </li>
+
+                        {{-- Registro de usuarios internos (solo para admin) --}}
+                        @if(Auth::user()->rol == 1)
+                            <li class="nav-item">
+                                <a href="{{ route('registro_admin') }}" class="btn btn-link nav-link">Registro</a>
+                            </li>
+                        @endif
                     @endauth
+
                 </ul>
             </div>
         </div>
@@ -81,5 +97,4 @@
     {{-- 👇 Esto permite que @push('scripts') funcione --}}
     @stack('scripts')
 </body>
-
 </html>

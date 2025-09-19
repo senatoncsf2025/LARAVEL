@@ -4,7 +4,9 @@
 <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
 <div class="container d-flex justify-content-center align-items-center flex-column py-5">
-    <form class="login-form text-center bg-white p-4 shadow rounded w-100" method="POST" action="{{ route('registro.submit') }}">
+    <form class="login-form text-center bg-white p-4 shadow rounded w-100" 
+          method="POST" 
+          action="{{ route('registro.submit') }}">
         @csrf
         <h2>REGISTRO DE VISITA</h2>
 
@@ -22,25 +24,32 @@
             </div>
         @endif
 
+        <!-- Rol fijo -->
+        <input type="hidden" name="rol_externo" value="visitante">
+
         <!-- DATOS DEL VISITANTE -->
         <div class="mb-3 text-start">
-            <label for="name" class="form-label">Nombre Completo</label>
-            <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
+            <label for="nombre" class="form-label">Nombre Completo</label>
+            <input type="text" name="nombre" id="nombre" class="form-control" 
+                   value="{{ old('nombre') }}" required>
         </div>
 
         <div class="mb-3 text-start">
             <label for="email" class="form-label">Correo Electrónico</label>
-            <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}">
+            <input type="email" name="email" id="email" class="form-control" 
+                   value="{{ old('email') }}">
         </div>
 
         <div class="mb-3 text-start">
             <label for="telefono" class="form-label">Teléfono</label>
-            <input type="text" name="telefono" id="telefono" class="form-control" value="{{ old('telefono') }}">
+            <input type="text" name="telefono" id="telefono" class="form-control" 
+                   value="{{ old('telefono') }}">
         </div>
 
         <div class="mb-3 text-start">
             <label for="cedula" class="form-label">Cédula</label>
-            <input type="text" name="cedula" id="cedula" class="form-control" value="{{ old('cedula') }}">
+            <input type="text" name="cedula" id="cedula" class="form-control" 
+                   value="{{ old('cedula') }}">
         </div>
 
         <!-- TRAE VEHÍCULO -->
@@ -67,6 +76,10 @@
                 <label for="modelo" class="form-label">Modelo</label>
                 <input type="text" name="modelo" id="modelo" class="form-control" value="{{ old('modelo') }}">
             </div>
+            <div class="mb-3">
+                <label for="color" class="form-label">Color</label>
+                <input type="text" name="color" id="color" class="form-control" value="{{ old('color') }}">
+            </div>
         </div>
 
         <!-- PC -->
@@ -81,14 +94,16 @@
         <div id="formPC" style="display: none;">
             <div class="mb-3 text-start">
                 <label for="serial_pc" class="form-label">Últimos 4 dígitos del serial del PC</label>
-                <input type="text" name="serial_pc" id="serial_pc" class="form-control" maxlength="4" value="{{ old('serial_pc') }}">
+                <input type="text" name="serial_pc" id="serial_pc" class="form-control" maxlength="4" 
+                       value="{{ old('serial_pc') }}">
             </div>
         </div>
 
         <!-- DÍA Y HORARIO -->
         <div class="mb-3 text-start">
-            <label for="dias" class="form-label">Día(s) de visita</label>
-            <input type="date" name="dias[]" id="dias" class="form-control" multiple>
+            <label for="fecha_visita" class="form-label">Día de visita</label>
+            <input type="date" name="fecha_visita" id="fecha_visita" class="form-control" 
+                   value="{{ old('fecha_visita') }}">
         </div>
 
         <div class="mb-3 text-start">
