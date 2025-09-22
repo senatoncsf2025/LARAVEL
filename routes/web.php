@@ -16,11 +16,11 @@ Route::get('/', function () {
     return view('contacto');
 })->name('home');
 
-// Rutas de Contacto
+// 📩 Rutas de Contacto
 Route::get('/contacto', [ContactoController::class, 'index'])->name('contacto.index');
 Route::post('/contacto', [ContactoController::class, 'store'])->name('contacto.store');
 
-// Otras páginas públicas
+// 📄 Otras páginas públicas
 Route::view('/somos', 'somos')->name('somos');
 Route::view('/mision', 'mision')->name('mision');
 Route::view('/vision', 'vision')->name('vision');
@@ -29,16 +29,33 @@ Route::view('/politica', 'politica')->name('politica');
 Route::view('/terminos', 'terminos')->name('terminos');
 Route::view('/faq', 'faq')->name('faq');
 
-// Registro de visitantes (público)
+/*
+|--------------------------------------------------------------------------
+| Registro público de visitantes
+|--------------------------------------------------------------------------
+*/
 Route::get('/registro', function () {
-    return view('auth.registro'); // Vista registro.blade.php
+    return view('registro');   // 👉 resources/views/registro.blade.php
 })->name('registro');
-Route::post('/registro', [UserExternoController::class, 'store'])->name('registro.submit');
 
-// Login y logout
+Route::post('/registro', [UserExternoController::class, 'storeVisitante'])
+    ->name('registro.submit');
+
+/*
+|--------------------------------------------------------------------------
+| Login y recuperación de contraseña
+|--------------------------------------------------------------------------
+*/
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// 🔑 Recuperación de contraseña
+Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+Route::post('/forgot-password', [AuthController::class, 'sendResetCode'])->name('password.sms');
+Route::get('/verify-code', [AuthController::class, 'showVerifyCodeForm'])->name('password.verify');
+Route::post('/verify-code', [AuthController::class, 'verifyCode'])->name('password.verify.submit');
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 
 /*
 |--------------------------------------------------------------------------
@@ -47,20 +64,14 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 */
 Route::middleware('auth')->group(function () {
 
-    // Panel principal (todos)
+    // Panel principal
     Route::view('/index2', 'index2')->name('index2');
-
-    // Ruta exclusiva para admin
     Route::view('/dashboard', 'dashboard')->name('dashboard');
 
-    // Registro de admin/vigilante (solo admin)
+    // Registro de usuarios internos (admin o vigilante)
     Route::view('/registro_admin', 'auth.registro_admin')->name('registro_admin');
 
-    /*
-    |--------------------------------------------------------------------------
-    | Secciones (para index2) → solo vistas
-    |--------------------------------------------------------------------------
-    */
+    // Vistas de secciones
     Route::view('/personal', 'secciones.personal')->name('personal');
     Route::view('/estudiantes', 'secciones.estudiantes')->name('estudiantes');
     Route::view('/docentes', 'secciones.docentes')->name('docentes');
@@ -71,11 +82,7 @@ Route::middleware('auth')->group(function () {
     Route::view('/visitantes', 'secciones.visitantes')->name('visitantes');
     Route::view('/acudientes', 'secciones.acudientes')->name('acudientes');
 
-    /*
-    |--------------------------------------------------------------------------
-    | CRUD dinámico de cada módulo (dashboard)
-    |--------------------------------------------------------------------------
-    */
+    // CRUD dinámico
     $roles = [
         'estudiantes',
         'docentes',
@@ -92,21 +99,35 @@ Route::middleware('auth')->group(function () {
         Route::prefix("dashboard/$rol")->group(function () use ($rol) {
             Route::get('/', [UserExternoController::class, 'index'])
                 ->name("$rol.index")->defaults('rol', $rol);
+
             Route::get('/create', [UserExternoController::class, 'create'])
                 ->name("$rol.create")->defaults('rol', $rol);
+
             Route::post('/', [UserExternoController::class, 'store'])
                 ->name("$rol.store")->defaults('rol', $rol);
+
+            // ⚡ Activar / Inactivar
+            Route::put('/activar/{id}', [UserExternoController::class, 'activar'])
+                ->name("$rol.activar")->defaults('rol', $rol);
+
+            Route::put('/inactivar/{id}', [UserExternoController::class, 'inactivar'])
+                ->name("$rol.inactivar")->defaults('rol', $rol);
+
             Route::get('/{id}/edit', [UserExternoController::class, 'edit'])
                 ->name("$rol.edit")->defaults('rol', $rol);
+
             Route::put('/{id}', [UserExternoController::class, 'update'])
                 ->name("$rol.update")->defaults('rol', $rol);
-            Route::delete('/{id}', [UserExternoController::class, 'destroy'])
-                ->name("$rol.destroy")
-                ->defaults('rol', $rol);
 
-            // 👇 NUEVA RUTA PARA REPORTE
             Route::get('/reporte', [UserExternoController::class, 'reporte'])
                 ->name("$rol.reporte")->defaults('rol', $rol);
+
+            // 📌 Movimientos
+            Route::post('/movimiento', [UserExternoController::class, 'registrarMovimiento'])
+                ->name("$rol.movimiento")->defaults('rol', $rol);
+
+            Route::get('/reporte-movimientos', [UserExternoController::class, 'reporteMovimientos'])
+                ->name("$rol.reporteMovimientos")->defaults('rol', $rol);
         });
     }
 });

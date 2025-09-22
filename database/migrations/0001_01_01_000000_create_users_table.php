@@ -11,7 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Tabla de usuarios
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -23,9 +22,15 @@ return new class extends Migration
             $table->string('telefono')->nullable();
             $table->string('codigo_verificacion')->nullable();
             $table->boolean('telefono_verificado')->default(false);
-            $table->integer('rol')->default(4); // 1=Administrador, 2=Vigilante, 3=Visitante, 4=Usuario corriente
+
+            // ✅ Solo dos roles: 1=Administrador, 2=Vigilante
+            $table->tinyInteger('rol')->default(2);
+
+            // Solo para vigilantes
             $table->string('codigo_vigilante')->nullable();
-            $table->string('cargo')->nullable(); // Solo para vigilantes
+            $table->string('cargo')->nullable();
+
+            // Info extra opcional
             $table->string('cedula')->nullable();
             $table->string('direccion')->nullable();
             $table->string('genero')->nullable();
@@ -35,7 +40,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Tabla para tokens de reinicio de contraseña
+        // Tabla para tokens de recuperación
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');

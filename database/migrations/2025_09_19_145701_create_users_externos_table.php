@@ -14,10 +14,14 @@ return new class extends Migration
             // Datos básicos
             $table->string('nombre');
             $table->string('apellido')->nullable();
-            $table->string('cedula')->nullable()->unique();
+            $table->string('cedula')->nullable()->unique(); // Documento único si se proporciona
             $table->string('telefono', 20)->nullable();
             $table->string('direccion')->nullable();
             $table->string('email')->nullable();
+
+            // Datos adicionales para visitantes
+            $table->date('fecha_visita')->nullable();
+            $table->enum('horario', ['AM', 'PM'])->nullable(); // AM o PM, consistente con el formulario
 
             // Clasificación por rol externo (ej: estudiante, docente, visitante…)
             $table->string('rol_externo'); 
@@ -26,7 +30,10 @@ return new class extends Migration
             $table->boolean('activo')->default(true);
 
             // Quién lo registró (admin o vigilante)
-            $table->foreignId('registrado_por')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('registrado_por')
+                  ->nullable()
+                  ->constrained('users')
+                  ->onDelete('set null');
 
             $table->timestamps();
         });

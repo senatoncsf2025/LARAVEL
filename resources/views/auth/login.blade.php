@@ -29,18 +29,37 @@
                 placeholder="Ingresa tu correo" value="{{ old('email') }}" required>
         </div>
 
-        <div class="mb-3 text-start">
+        <div class="mb-3 text-start position-relative">
             <label for="password" class="form-label">Contraseña</label>
-            <input type="password" name="password" id="password" class="form-control" 
-                placeholder="Ingresa tu contraseña" required>
+            <div class="input-group">
+                <input type="password" name="password" id="password" class="form-control" 
+                    placeholder="Ingresa tu contraseña" required>
+                <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                    👁️
+                </button>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-dark w-100">Ingresar</button>
 
         <div class="extra mt-3">
             ¿No tienes cuenta? <a href="{{ route('registro') }}">Regístrate</a><br>
-            <a href="#">¿Olvidaste tu contraseña?</a>
+            <a href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
         </div>
     </form>
 </div>
+
+{{-- Script para mostrar/ocultar contraseña --}}
+@push('scripts')
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        // Cambiar el icono
+        this.textContent = type === 'password' ? '👁️' : '🙈';
+    });
+</script>
+@endpush
 @endsection

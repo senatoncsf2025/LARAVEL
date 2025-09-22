@@ -16,10 +16,12 @@ class User extends Authenticatable
     // Clave primaria
     protected $primaryKey = 'id';
 
-    // Laravel usa timestamps
+    // Laravel maneja timestamps
     public $timestamps = true;
 
-    // Campos asignables en masa
+    /**
+     * Campos asignables en masa
+     */
     protected $fillable = [
         'name',
         'email',
@@ -27,19 +29,33 @@ class User extends Authenticatable
         'telefono',
         'cedula',
         'direccion',
-        'codigo_vigilante',
+        'genero',
+        'fecha_nacimiento',
+        'codigo_verificacion',
+        'telefono_verificado',
         'rol',
+        'codigo_vigilante',
+        'cargo',
+        'activo',
     ];
 
-    // Campos ocultos al serializar
+    /**
+     * Campos ocultos al serializar
+     */
     protected $hidden = [
         'password',
         'remember_token',
+        'codigo_verificacion', // No exponer nunca este campo
     ];
 
-    // Casting de atributos
+    /**
+     * Casting de atributos
+     */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at'   => 'datetime',
+        'fecha_nacimiento'    => 'date',
+        'telefono_verificado' => 'boolean',
+        'activo'              => 'boolean',
     ];
 
     /**
