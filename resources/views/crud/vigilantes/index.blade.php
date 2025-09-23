@@ -12,9 +12,10 @@
 
     <div id="alert-container"></div>
 
-    <a href="{{ route($rol . '.reporte') }}" class="btn btn-info mb-3" target="_blank">
+    <!-- 🔹 Cambié el enlace por un botón que abre el modal -->
+    <button class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#filtroReporteModal">
         📄 Generar Reporte PDF
-    </a>
+    </button>
 
     <table class="table table-bordered">
         <thead>
@@ -50,7 +51,7 @@
                 </td>
                 <td>
                     @if($usuario->pc)
-                        💻 {{ $usuario->pc->codigo_pc }} (Serial: {{ $usuario->pc->serial_pc }})
+                        💻 Serial: {{ $usuario->pc->serial }}
                     @else
                         -
                     @endif
@@ -82,6 +83,56 @@
             @endforelse
         </tbody>
     </table>
+</div>
+
+<!-- 🔹 Modal de filtros -->
+<div class="modal fade" id="filtroReporteModal" tabindex="-1" aria-labelledby="filtroReporteLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form action="{{ route($rol . '.reporte') }}" method="GET" target="_blank">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="filtroReporteLabel">Filtros para el reporte</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          
+          <!-- Campos a incluir -->
+          <label class="form-label">Campos a incluir:</label>
+          <div class="form-check"><input type="checkbox" class="form-check-input" name="campos[]" value="nombre" checked> <label class="form-check-label">Nombre</label></div>
+          <div class="form-check"><input type="checkbox" class="form-check-input" name="campos[]" value="apellido" checked> <label class="form-check-label">Apellido</label></div>
+          <div class="form-check"><input type="checkbox" class="form-check-input" name="campos[]" value="cedula"> <label class="form-check-label">Cédula</label></div>
+          <div class="form-check"><input type="checkbox" class="form-check-input" name="campos[]" value="telefono"> <label class="form-check-label">Teléfono</label></div>
+          <div class="form-check"><input type="checkbox" class="form-check-input" name="campos[]" value="email" checked> <label class="form-check-label">Email</label></div>
+          <div class="form-check"><input type="checkbox" class="form-check-input" name="campos[]" value="direccion"> <label class="form-check-label">Dirección</label></div>
+          <div class="form-check"><input type="checkbox" class="form-check-input" name="campos[]" value="vehiculo"> <label class="form-check-label">Vehículo</label></div>
+          <div class="form-check"><input type="checkbox" class="form-check-input" name="campos[]" value="pc"> <label class="form-check-label">PC</label></div>
+          <div class="form-check"><input type="checkbox" class="form-check-input" name="campos[]" value="estado"> <label class="form-check-label">Estado</label></div>
+
+          <hr>
+
+          <!-- Filtro de estado -->
+          <label class="form-label">Estado:</label>
+          <select name="estado" class="form-select">
+            <option value="">Todos</option>
+            <option value="1">Activo</option>
+            <option value="0">Inactivo</option>
+          </select>
+
+          <hr>
+
+          <!-- Rango de fechas -->
+          <label class="form-label">Fecha de registro:</label>
+          <input type="date" name="fecha_inicio" class="form-control mb-2">
+          <input type="date" name="fecha_fin" class="form-control">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-info">Generar PDF</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 @endsection
 

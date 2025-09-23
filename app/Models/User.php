@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Notifications\CustomVerifyEmail; // 👈 Importamos la notificación personalizada
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -33,12 +31,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'direccion',
         'genero',
         'fecha_nacimiento',
-        'codigo_verificacion',
-        'telefono_verificado',
         'rol',
         'codigo_vigilante',
         'cargo',
         'activo',
+        'email_verified_at', // 👈 lo mantenemos por si quieres restaurar la verificación luego
     ];
 
     /**
@@ -47,7 +44,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
-        'codigo_verificacion', // No exponer nunca este campo
     ];
 
     /**
@@ -56,7 +52,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at'   => 'datetime',
         'fecha_nacimiento'    => 'date',
-        'telefono_verificado' => 'boolean',
         'activo'              => 'boolean',
     ];
 
@@ -66,13 +61,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAuthPassword()
     {
         return $this->password;
-    }
-
-    /**
-     * Usar notificación personalizada para verificación de correo
-     */
-    public function sendEmailVerificationNotification()
-    {
-        $this->notify(new CustomVerifyEmail);
     }
 }

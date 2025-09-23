@@ -151,6 +151,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             Route::get('/reporte-movimientos', [UserExternoController::class, 'reporteMovimientos'])
                 ->name("$rol.reporteMovimientos")->defaults('rol', $rol);
+                
         });
     }
 });
