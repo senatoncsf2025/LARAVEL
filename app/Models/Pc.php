@@ -12,13 +12,21 @@ class Pc extends Model
     protected $table = 'pcs';
 
     protected $fillable = [
+        'serial',
+        'activo',
+        'user_id',
         'user_externo_id',
-        'codigo_pc',
-        'serial_pc',
     ];
 
-    public function usuario()
+    // 🔗 Relación inversa con usuario externo
+    public function usuarioExterno()
     {
         return $this->belongsTo(UserExterno::class, 'user_externo_id');
+    }
+
+    // 🔗 Relación opcional con usuario interno
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

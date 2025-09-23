@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\PendingUser;
+use App\Mail\ConfirmarRegistroMail;
 
 class AuthController extends Controller
 {
@@ -40,6 +44,12 @@ class AuthController extends Controller
                 return back()->withErrors([
                     'email' => 'Tu cuenta está inactiva. Contacta al administrador.',
                 ]);
+            }
+
+            if (is_null($user->email_verified_at)) {
+                Auth::logout();
+                return redirect()->route('verification.notice')
+                    ->with('error', 'Debes verificar tu correo antes de acceder al sistema.');
             }
 
             if ($user->rol == 1) {
@@ -85,20 +95,76 @@ class AuthController extends Controller
     {
         $request->validate([
             'nombre'   => 'required|string|max:100',
-            'email'    => 'required|email|unique:users,email',
+            'email'    => 'required|email|unique:pending_users,email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
-            'rol'      => 'required|in:1,2', // 1=Admin, 2=Vigilante
+            'rol'      => 'required|in:1,2',
+
+            'cedula'   => 'required|string|max:20|unique:pending_users,cedula|unique:users,cedula',
+            'telefono' => 'required|string|max:20',
+            'direccion' => 'required|string|max:255',
+            'genero'   => 'required|in:Masculino,Femenino,Otro',
+            'fecha_nacimiento' => 'required|date',
+
+            'codigo_vigilante' => 'nullable|required_if:rol,2|string|max:50',
+            'cargo'            => 'nullable|required_if:rol,2|string|max:50',
         ]);
 
-        User::create([
-            'name'     => $request->nombre,
+        $token = Str::random(64);
+
+        // Guardar en pending_users
+        $pending = PendingUser::create([
+            'nombre'   => $request->nombre,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
             'rol'      => $request->rol,
-            'activo'   => true,
+            'cedula'   => $request->cedula,
+            'telefono' => $request->telefono,
+            'direccion' => $request->direccion,
+            'genero'   => $request->genero,
+            'fecha_nacimiento' => $request->fecha_nacimiento,
+            'codigo_vigilante' => $request->codigo_vigilante,
+            'cargo'    => $request->cargo,
+            'token'    => $token,
         ]);
 
-        return redirect()->route('login')->with('success', 'Usuario registrado correctamente.');
+        // Generar link de verificación
+        $link = url("/confirmar-registro/{$token}");
+
+        // Enviar correo con Mailable
+        Mail::to($pending->email)->send(new ConfirmarRegistroMail($pending->nombre, $link));
+
+        return back()->with('success', 'Se envió un correo de confirmación a ' . $request->email);
+    }
+
+    public function confirmarRegistro($token)
+    {
+        $pending = PendingUser::where('token', $token)->first();
+
+        if (!$pending) {
+            return redirect()->route('login')->with('error', 'Token inválido o expirado.');
+        }
+
+        // Crear usuario real en tabla users
+        User::create([
+            'name'     => $pending->nombre,
+            'email'    => $pending->email,
+            'password' => $pending->password,
+            'rol'      => $pending->rol,
+            'cedula'   => $pending->cedula,
+            'telefono' => $pending->telefono,
+            'direccion' => $pending->direccion,
+            'genero'   => $pending->genero,
+            'fecha_nacimiento' => $pending->fecha_nacimiento,
+            'codigo_vigilante' => $pending->codigo_vigilante,
+            'cargo'    => $pending->cargo,
+            'activo'   => true,
+            'email_verified_at' => now(),
+        ]);
+
+        // Eliminar de la tabla temporal
+        $pending->delete();
+
+        return redirect()->route('login')->with('success', 'Correo verificado. Ya puedes iniciar sesión.');
     }
 
     // ========================================================

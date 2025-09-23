@@ -2,36 +2,25 @@
 
 namespace App\Providers;
 
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
-use App\Models\User;
+use Illuminate\Support\ServiceProvider;
 
-class AuthServiceProvider extends ServiceProvider
+class AppServiceProvider extends ServiceProvider
 {
     /**
-     * The policy mappings for the application.
-     *
-     * @var array<class-string, class-string>
+     * Register any application services.
      */
-    protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
-    ];
+    public function register(): void
+    {
+        //
+    }
 
     /**
-     * Register any authentication / authorization services.
+     * Bootstrap any application services.
      */
     public function boot(): void
     {
-        $this->registerPolicies();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Gate: isAdmin
-        | Solo permite acceso si el usuario autenticado tiene rol = 1
-        |--------------------------------------------------------------------------
-        */
-        Gate::define('isAdmin', function (User $user) {
-            return $user->rol === 1;
-        });
+        // 👇 Aquí ya NO forzamos ngrok
+        // Dejamos que APP_URL controle el comportamiento local (127.0.0.1:8000)
+        // y usamos NGROK solo en CustomVerifyEmail.php
     }
 }

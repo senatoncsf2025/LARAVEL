@@ -89,6 +89,17 @@ class UserExternoController extends Controller
             'direccion'    => 'nullable|string|max:255',
             'fecha_visita' => 'nullable|date',
             'horario'      => 'nullable|string|max:10',
+
+            // Vehículo
+            'trae_vehiculo' => 'nullable|boolean',
+            'placa'     => 'nullable|string|max:10|unique:vehiculos,placa',
+            'marca'     => 'nullable|string|max:50',
+            'modelo'    => 'nullable|string|max:50',
+            'color'     => 'nullable|string|max:30',
+
+            // PC
+            'trae_pc'   => 'nullable|boolean',
+            'serial'    => 'nullable|string|max:20|unique:pcs,serial',
         ]);
 
         $usuario = UserExterno::create([
@@ -98,7 +109,7 @@ class UserExternoController extends Controller
             'telefono'     => $request->telefono,
             'email'        => $request->email,
             'direccion'    => $request->direccion,
-            'rol_externo'  => 'visitante',  // 🔑 Rol fijo
+            'rol_externo'  => 'visitante',
             'activo'       => true,
             'fecha_visita' => $request->fecha_visita,
             'horario'      => $request->horario,
@@ -115,7 +126,7 @@ class UserExternoController extends Controller
 
         if ($request->trae_pc) {
             $usuario->pc()->create([
-                'serial' => $request->serial_pc,
+                'serial' => $request->serial,
             ]);
         }
 

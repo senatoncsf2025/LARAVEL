@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserExternoController;
+use App\Http\Controllers\VerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,17 +60,39 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('
 
 /*
 |--------------------------------------------------------------------------
-| Rutas protegidas (solo usuarios autenticados)
+| RUTAS PARA VERIFICACIÓN DE EMAIL
 |--------------------------------------------------------------------------
 */
-Route::middleware('auth')->group(function () {
+
+// Aviso para verificar email
+Route::get('/email/verify', [VerificationController::class, 'notice'])
+    ->middleware('auth')
+    ->name('verification.notice');
+
+// Procesar link de verificación
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
+    ->middleware(['auth', 'signed'])
+    ->name('verification.verify');
+
+// Reenviar correo de verificación
+Route::post('/email/verification-notification', [VerificationController::class, 'resend'])
+    ->middleware(['auth', 'throttle:6,1'])
+    ->name('verification.send');
+
+/*
+|--------------------------------------------------------------------------
+| Rutas protegidas (solo usuarios autenticados y verificados)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'verified'])->group(function () {
 
     // Panel principal
     Route::view('/index2', 'index2')->name('index2');
     Route::view('/dashboard', 'dashboard')->name('dashboard');
 
     // Registro de usuarios internos (admin o vigilante)
-    Route::view('/registro_admin', 'auth.registro_admin')->name('registro_admin');
+    Route::get('/registro_admin', [AuthController::class, 'showRegistroAdminForm'])->name('registro_admin');
+    Route::post('/registro_admin', [AuthController::class, 'registroAdmin'])->name('registro_admin.submit');
 
     // Vistas de secciones
     Route::view('/personal', 'secciones.personal')->name('personal');

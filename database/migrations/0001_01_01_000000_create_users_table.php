@@ -13,28 +13,31 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name'); // Nombre completo
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
             // Datos adicionales
-            $table->string('telefono')->nullable();
+            $table->string('telefono', 20)->nullable();
             $table->string('codigo_verificacion')->nullable();
             $table->boolean('telefono_verificado')->default(false);
 
-            // ✅ Solo dos roles: 1=Administrador, 2=Vigilante
+            // Roles: 1=Administrador, 2=Vigilante
             $table->tinyInteger('rol')->default(2);
+
+            // Info personal
+            $table->string('cedula')->nullable()->unique();
+            $table->string('direccion')->nullable();
+            $table->enum('genero', ['Masculino', 'Femenino', 'Otro'])->nullable();
+            $table->date('fecha_nacimiento')->nullable();
 
             // Solo para vigilantes
             $table->string('codigo_vigilante')->nullable();
             $table->string('cargo')->nullable();
 
-            // Info extra opcional
-            $table->string('cedula')->nullable();
-            $table->string('direccion')->nullable();
-            $table->string('genero')->nullable();
-            $table->date('fecha_nacimiento')->nullable();
+            // Estado del usuario (activo/inactivo)
+            $table->boolean('activo')->default(true);
 
             $table->rememberToken();
             $table->timestamps();

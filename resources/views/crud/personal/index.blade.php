@@ -42,36 +42,35 @@
                 <td>{{ $usuario->direccion }}</td>
                 <td>
                     @if($usuario->vehiculo)
-                        🚗 {{ $usuario->vehiculo->placa }}
-                        ({{ $usuario->vehiculo->marca }} {{ $usuario->vehiculo->modelo }}, {{ $usuario->vehiculo->color }})
+                    🚗 {{ $usuario->vehiculo->placa }}
+                    ({{ $usuario->vehiculo->marca }} {{ $usuario->vehiculo->modelo }}, {{ $usuario->vehiculo->color }})
                     @else
-                        -
+                    -
                     @endif
                 </td>
                 <td>
-                    @if($usuario->pc)
-                        💻 {{ $usuario->pc->codigo_pc }} (Serial: {{ $usuario->pc->serial_pc }})
+                    @if($usuario->pc && $usuario->pc->serial)
+                    {{ $usuario->pc->serial }}
                     @else
-                        -
+                    -
                     @endif
                 </td>
                 <td class="estado">
                     @if($usuario->activo)
-                        <span class="badge bg-success">Activo</span>
+                    <span class="badge bg-success">Activo</span>
                     @else
-                        <span class="badge bg-secondary">Inactivo</span>
+                    <span class="badge bg-secondary">Inactivo</span>
                     @endif
                 </td>
                 <td class="acciones">
                     <a href="{{ route($rol . '.edit', $usuario->id) }}" class="btn btn-warning btn-sm">Editar</a>
                     @if($usuario->activo)
-                        <button type="button" class="btn btn-danger btn-sm toggle-estado"
-                            data-url="{{ route($rol . '.inactivar', $usuario->id) }}"
-                            data-action="inactivar">Inactivar</button>
+                    <button type="button" class="btn btn-danger btn-sm toggle-estado"
+                        data-url="{{ route($rol . '.inactivar', $usuario->id) }}"
+                        data-action="inactivar">Inactivar</button>
                     @else
-                        <button type="button" class="btn btn-success btn-sm toggle-estado"
-                            data-url="{{ route($rol . '.activar', $usuario->id) }}"
-                            data-action="activar">Activar</button>
+                    <button type="button" class="btn btn-success btn-sm toggle-estado"
+                        data-url="{{ route($rol . '.activar', $usuario->id) }}" data-action="activar">Activar</button>
                     @endif
                 </td>
             </tr>
@@ -87,7 +86,7 @@
 
 @push('scripts')
 <script>
-function toggleEstadoHandler(event) {
+    function toggleEstadoHandler(event) {
     const button = event.currentTarget;
     const url = button.dataset.url;
     const action = button.dataset.action;

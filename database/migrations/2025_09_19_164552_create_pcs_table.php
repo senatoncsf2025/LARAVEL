@@ -10,12 +10,22 @@ return new class extends Migration
     {
         Schema::create('pcs', function (Blueprint $table) {
             $table->id();
-            $table->string('serial', 20)->unique();
+
+            // ✅ Puede ser obligatorio u opcional según la lógica del sistema
+            $table->string('serial', 20)->unique()->nullable();
+
             $table->boolean('activo')->default(true);
 
             // Puede pertenecer a un user (interno) o a un user_externo
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
-            $table->foreignId('user_externo_id')->nullable()->constrained('users_externos')->onDelete('cascade');
+            $table->foreignId('user_id')
+                  ->nullable()
+                  ->constrained('users')
+                  ->onDelete('cascade');
+
+            $table->foreignId('user_externo_id')
+                  ->nullable()
+                  ->constrained('users_externos')
+                  ->onDelete('cascade');
 
             $table->timestamps();
         });

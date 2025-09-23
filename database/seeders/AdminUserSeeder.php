@@ -22,6 +22,8 @@ class AdminUserSeeder extends Seeder
                 'rol' => 1, // Rol de administrador
                 'telefono' => '0000000000',
                 'cedula' => '1234567890',
+                'activo' => true,
+                'email_verified_at' => now(), // ✅ marcado como verificado
             ]
         );
 
@@ -34,6 +36,20 @@ class AdminUserSeeder extends Seeder
                 'rol' => 2, // Rol de vigilante
                 'telefono' => '1111111111',
                 'cedula' => '9876543210',
+                'activo' => true,
+                'email_verified_at' => now(), // ✅ marcado como verificado
+            ]
+        );
+        User::updateOrCreate(
+            ['email' => 'senatoncsf2025@gmail.com'], // tu correo real
+            [
+                'name' => 'Usuario Senaton',
+                'password' => Hash::make('claveSegura123'), // 🔑 cámbiala si quieres
+                'rol' => 1, // lo dejamos como administrador
+                'telefono' => '3001234567',
+                'cedula' => '5555555555',
+                'activo' => true,
+                'email_verified_at' => null, // ❌ sin verificar (para probar verificación)
             ]
         );
     }

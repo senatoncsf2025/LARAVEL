@@ -32,7 +32,6 @@ class EstudianteController extends Controller
             'email'       => 'nullable|email|max:150',
 
             // PC
-            'codigo_pc'   => 'nullable|string|max:50',
             'trae_pc'     => 'nullable|boolean',
             'serial_pc'   => 'nullable|string|max:10',
 
@@ -92,7 +91,6 @@ class EstudianteController extends Controller
             'direccion'   => 'nullable|string|max:255',
             'email'       => 'nullable|email|max:150',
 
-            'codigo_pc'   => 'nullable|string|max:50',
             'trae_pc'     => 'nullable|boolean',
             'serial_pc'   => 'nullable|string|max:10',
 
@@ -103,7 +101,7 @@ class EstudianteController extends Controller
             'color'       => 'nullable|string|max:30',
 
             'fecha_visita' => 'nullable|date',
-            'horario'      => 'nullable|string|max:20',
+            'horario'      => 'nullable|string|max:20',         
         ]);
 
         $estudiante->update($request->all());
